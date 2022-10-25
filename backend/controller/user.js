@@ -104,11 +104,35 @@ const refreshToken = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  const refreshToken = req.cookies.refresh_token;
+  if (!refreshToken) {
+    return res.sendStatus(204);
+  }
+  const user = await users.findAll({
+    where: { refresh_token: refreshToken },
+  });
+  if (!user.length) {
+    return res.sendStatus(204);
+  }
+  // delete refresh token and clear cookie
+  const { id: userId } = user[0];
+  await users.update(
+    { refresh_token: null },
+    {
+      where: { id: userId },
+    }
+  );
+  res.clearCookie("refresh_token");
+  return res.sendStatus(200);
+};
+
 const user_controller = {
   getUser: getUser,
   register: register,
   login: login,
   refreshToken: refreshToken,
+  logout: logout,
 };
 
 export default user_controller;

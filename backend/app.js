@@ -4,6 +4,7 @@ import users from "./models/user.js";
 import user_route from "./routes/user.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // entrypoint
 dotenv.config();
@@ -19,6 +20,7 @@ try {
   console.error("DB connection", error);
 }
 
+app.use(cors({ credentials: true, origin: "http:localhost:3000" }));
 app.use(cookieParser());
 app.use(express.json()); // to receive data in json format
 
