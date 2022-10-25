@@ -2,7 +2,10 @@ import express from "express";
 import db from "./config/db.js";
 import users from "./models/user.js";
 import user_route from "./routes/user.js";
+import dotenv from "dotenv";
 
+// entrypoint
+dotenv.config();
 const app = express();
 const port = 5000;
 

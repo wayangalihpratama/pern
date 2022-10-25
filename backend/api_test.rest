@@ -10,3 +10,12 @@ Content-Type: application/json
   "password": "secret",
   "confirm_password": "secret"
 }
+
+###
+POST  http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "email": "galih@mail.com",
+  "password": "secret"
+}
