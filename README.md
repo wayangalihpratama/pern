@@ -1,5 +1,5 @@
 # PERN (Postgress - Express - React - Node)
-Try to learning use Express JS as backend with Postgress as database and React as frontend. Will try to implement electron js to launch this project as desktop application.
+- Try to learning use Express JS as backend with Postgress as database and React as frontend. Will try to implement electron js to launch this project as desktop application.
 ---
 ## Start
 ### Backend
