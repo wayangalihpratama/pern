@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-nodemon index
+nodemon app.js

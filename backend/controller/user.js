@@ -4,7 +4,9 @@ import jwt from "jsonwebtoken";
 
 const getUser = async (req, res) => {
   try {
-    const data = await users.findAll();
+    const data = await users.findAll({
+      attributes: ["id", "name", "email"],
+    });
     res.json(data);
   } catch (error) {
     console.error("getUser", error);
@@ -72,10 +74,41 @@ const login = async (req, res) => {
   }
 };
 
+const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refresh_token;
+    if (!refreshToken) {
+      return res.sendStatus(401);
+    }
+    const user = await users.findAll({
+      where: { refresh_token: refreshToken },
+    });
+    if (!user.length) {
+      return res.sendStatus(403);
+    }
+    const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
+    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      const { id: userId, name, email } = user[0];
+      const accessToken = jwt.sign(
+        { userId, name, email },
+        ACCESS_TOKEN_SECRET,
+        { expiresIn: "20s" }
+      );
+      res.json({ accessToken });
+    });
+  } catch (error) {
+    console.error("refresh token", error);
+  }
+};
+
 const user_controller = {
   getUser: getUser,
   register: register,
   login: login,
+  refreshToken: refreshToken,
 };
 
 export default user_controller;

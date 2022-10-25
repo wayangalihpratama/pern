@@ -3,6 +3,7 @@ import db from "./config/db.js";
 import users from "./models/user.js";
 import user_route from "./routes/user.js";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 // entrypoint
 dotenv.config();
@@ -18,6 +19,7 @@ try {
   console.error("DB connection", error);
 }
 
+app.use(cookieParser());
 app.use(express.json()); // to receive data in json format
 
 // route
