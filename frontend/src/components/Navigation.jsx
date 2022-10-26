@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
-import { GlobalStore } from "../lib";
+import { store } from "../lib";
 
 const menuItems = [
   { label: "Dashboard", key: "dashboard" },
@@ -8,10 +8,10 @@ const menuItems = [
 ];
 
 const Navigation = () => {
-  const current = GlobalStore.ui.useState((s) => s.current);
+  const current = store.ui.useState((s) => s.current);
 
   const handleSelectMenu = ({ key }) => {
-    GlobalStore.ui.update((s) => {
+    store.ui.update((s) => {
       s.current = key;
     });
   };

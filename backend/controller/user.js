@@ -72,7 +72,7 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       // secure: true // for https
     });
-    res.json({ accessToken });
+    res.json({ id: userId, name: userName, email: userEmail, accessToken });
   } catch (error) {
     res.status(404).json({ msg: "User not found!" });
   }

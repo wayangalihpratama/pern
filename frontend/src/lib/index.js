@@ -1,2 +1,2 @@
 export { default as api } from "./api";
-export { default as GlobalStore } from "./store";
+export { default as store } from "./store";

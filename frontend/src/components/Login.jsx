@@ -1,19 +1,23 @@
 import React from "react";
 import { Row, Card, Form, Input, Button } from "antd";
-import { api } from "../lib";
+import { api, store } from "../lib";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const handleLogin = (values) => {
     const { email, password } = values;
     api
       .post("/login", { email, password })
       .then((res) => {
-        const accessToken = res?.data?.accessToken;
-        if (accessToken) {
-          api.setToken(accessToken);
-        }
+        const { id, name, email, accessToken } = res.data;
+        api.setToken(accessToken);
+        store.data.update((s) => {
+          s.user = { id, name, email };
+        });
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.error(err);

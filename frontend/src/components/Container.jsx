@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Layout } from "antd";
+import { Layout, Spin, Row } from "antd";
 import Navigation from "./Navigation";
+import { store } from "../lib";
 
 const { Header, Content, Footer, Sider } = Layout;
 
+const Loading = () => (
+  <Row align="middle" justify="center" className="loading-container">
+    <Spin />
+  </Row>
+);
+
 const Container = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const loading = store.ui.useState((s) => s.loading);
 
   return (
     <Layout hasSider>
@@ -29,13 +37,15 @@ const Container = ({ children }) => {
             collapsed ? "content-container-collapsed" : ""
           }`}
         >
-          {children}
+          {loading ? <Loading /> : children}
         </Content>
         <Footer className="footer-container">
-          <p>
-            Learning Express - React &copy;2022 by{" "}
-            <a href="https://github.com/wayangalihpratama">wgprtm</a>.
-          </p>
+          <Row align="middle" justify="end">
+            <p>
+              Learning Express - React &copy;2022 by{" "}
+              <a href="https://github.com/wayangalihpratama">wgprtm</a>.
+            </p>
+          </Row>
         </Footer>
       </Layout>
     </Layout>
