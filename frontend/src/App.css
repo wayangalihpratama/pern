@@ -10,3 +10,34 @@
   margin-top: -75px;
   width: 35%;
 }
+
+.sider-container {
+  overflow: auto;
+  min-height: 93vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 100px;
+}
+
+.header-container {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  color: #ffffff;
+}
+
+.content-container {
+  min-height: 93vh;
+  margin-top: 100px;
+  margin-left: 350px;
+}
+
+.content-container-collapsed {
+  margin-left: 150px !important;
+}
+
+.footer-container {
+  text-align: center;
+}
