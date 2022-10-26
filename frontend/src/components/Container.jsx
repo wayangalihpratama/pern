@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Spin, Row } from "antd";
+import { Layout, Spin, Row, Col, Menu, Dropdown, Space } from "antd";
 import Navigation from "./Navigation";
 import { store } from "../lib";
+import isEmpty from "lodash/isEmpty";
+import { BiLogOutCircle, BiUserCircle } from "react-icons/bi";
+import { RiSettings2Line } from "react-icons/ri";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -11,9 +14,37 @@ const Loading = () => (
   </Row>
 );
 
+const Profile = () => {
+  const user = store.data.useState((s) => s.user);
+
+  const items = [
+    {
+      label: "Setting",
+      key: "setting",
+      icon: <RiSettings2Line className="profile-icon" />,
+    },
+    {
+      label: "Logout",
+      key: "logout",
+      icon: <BiLogOutCircle className="profile-icon" />,
+    },
+  ];
+
+  return (
+    <Dropdown overlay={<Menu items={items} />} style={{ marginTop: "-20px" }}>
+      <a onClick={(e) => e.preventDefault()}>
+        <Space style={{ padding: 0 }} align="center">
+          <div className="profile">{user.name}</div>
+        </Space>
+      </a>
+    </Dropdown>
+  );
+};
+
 const Container = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const loading = store.ui.useState((s) => s.loading);
+  const user = store.data.useState((s) => s.user);
 
   return (
     <Layout hasSider>
@@ -30,7 +61,12 @@ const Container = ({ children }) => {
       </Sider>
       <Layout>
         <Header className="header-container">
-          <h1>P.E.R.N.</h1>
+          <Row gutter={[24, 24]} align="middle" justify="space-between">
+            <Col>
+              <div className="title">P.E.R.N.</div>
+            </Col>
+            <Col>{!isEmpty(user) && <Profile />}</Col>
+          </Row>
         </Header>
         <Content
           className={`content-container ${

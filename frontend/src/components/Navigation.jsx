@@ -1,10 +1,19 @@
 import React from "react";
 import { Menu } from "antd";
 import { store } from "../lib";
+import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
 
 const menuItems = [
-  { label: "Dashboard", key: "dashboard" },
-  { label: "Manage User", key: "manage-user" },
+  {
+    label: "Dashboard",
+    key: "dashboard",
+    icon: <MdDashboard className="nav-icon" />,
+  },
+  {
+    label: "Manage User",
+    key: "manage-user",
+    icon: <MdSupervisedUserCircle className="nav-icon" />,
+  },
 ];
 
 const Navigation = () => {
