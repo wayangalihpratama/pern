@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Layout, Spin, Row, Col, Menu, Dropdown, Space } from "antd";
 import Navigation from "./Navigation";
-import { store } from "../lib";
+import { store, api } from "../lib";
 import isEmpty from "lodash/isEmpty";
-import { BiLogOutCircle, BiUserCircle } from "react-icons/bi";
+import { BiLogOutCircle } from "react-icons/bi";
 import { RiSettings2Line } from "react-icons/ri";
+import { useNavigate, Link } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -16,6 +17,18 @@ const Loading = () => (
 
 const Profile = () => {
   const user = store.data.useState((s) => s.user);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    api
+      .delete("/logout")
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const items = [
     {
@@ -24,7 +37,7 @@ const Profile = () => {
       icon: <RiSettings2Line className="profile-icon" />,
     },
     {
-      label: "Logout",
+      label: <Link onClick={handleLogout}>Logout</Link>,
       key: "logout",
       icon: <BiLogOutCircle className="profile-icon" />,
     },
@@ -32,7 +45,7 @@ const Profile = () => {
 
   return (
     <Dropdown overlay={<Menu items={items} />} style={{ marginTop: "-20px" }}>
-      <a onClick={(e) => e.preventDefault()}>
+      <a href="#" onClick={(e) => e.preventDefault()}>
         <Space style={{ padding: 0 }} align="center">
           <div className="profile">{user.name}</div>
         </Space>
