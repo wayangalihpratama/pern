@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Layout } from "antd";
+import Navigation from "./Navigation";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -17,10 +18,12 @@ const Container = ({ children }) => {
         collapsed={collapsed}
         onCollapse={setCollapsed}
       >
-        Sider
+        <Navigation />
       </Sider>
       <Layout>
-        <Header className="header-container">Header</Header>
+        <Header className="header-container">
+          <h1>P.E.R.N.</h1>
+        </Header>
         <Content
           className={`content-container ${
             collapsed ? "content-container-collapsed" : ""

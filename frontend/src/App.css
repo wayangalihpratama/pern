@@ -18,7 +18,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  padding-top: 100px;
+  padding-top: 90px;
 }
 
 .header-container {
@@ -26,6 +26,12 @@
   z-index: 1;
   width: 100%;
   color: #ffffff;
+}
+
+.header-container h1 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 35px;
 }
 
 .content-container {
