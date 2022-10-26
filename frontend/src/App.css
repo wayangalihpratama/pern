@@ -3,6 +3,7 @@
 .login-container {
   width: 100%;
   min-height: 100vh;
+  background: #adaca7;
 }
 
 .login-wrapper {

@@ -15,6 +15,10 @@ const getUser = async (req, res) => {
 
 const register = async (req, res) => {
   const { name, email, password, confirm_password } = req.body;
+  const match = await users.findAll({ where: { email: email } });
+  if (match.length) {
+    return res.status(400).json({ msg: "Email already used!" });
+  }
   if (password !== confirm_password) {
     return res
       .status(400)

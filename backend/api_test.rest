@@ -3,7 +3,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hb
 
 
 ###
-POST  http://localhost:5000/user
+POST  http://localhost:5000/register
 Content-Type: application/json
 
 {
