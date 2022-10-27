@@ -2,7 +2,6 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "author": "Wayan Galih Pratama",
   "license": "MIT",
   "dependencies": {
@@ -13,6 +12,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "pg-promise": "^10.12.1",
-    "sequelize": "^6.25.3"
+    "sequelize": "^6.25.3",
+    "sequelize-cli": "^6.5.2"
   }
 }

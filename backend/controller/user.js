@@ -1,10 +1,10 @@
-import users from "../models/user.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { User } = require("../models");
 
 const getUser = async (req, res) => {
   try {
-    const data = await users.findAll({
+    const data = await User.findAll({
       attributes: ["id", "name", "email"],
     });
     res.json(data);
@@ -15,7 +15,7 @@ const getUser = async (req, res) => {
 
 const register = async (req, res) => {
   const { name, email, password, confirm_password } = req.body;
-  const match = await users.findAll({ where: { email: email } });
+  const match = await User.findAll({ where: { email: email } });
   if (match.length) {
     return res.status(400).json({ msg: "Email already used!" });
   }
@@ -27,7 +27,7 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   try {
-    await users.create({
+    await User.create({
       name: name,
       email: email,
       password: hashPassword,
@@ -41,7 +41,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const login = await users.findAll({ where: { email: email } });
+    const login = await User.findAll({ where: { email: email } });
     const {
       id: userId,
       name: userName,
@@ -63,7 +63,7 @@ const login = async (req, res) => {
       REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
-    await users.update(
+    await User.update(
       { refresh_token: refreshToken },
       { where: { id: userId } }
     );
@@ -84,7 +84,7 @@ const refreshToken = async (req, res) => {
     if (!refreshToken) {
       return res.sendStatus(401);
     }
-    const user = await users.findAll({
+    const user = await User.findAll({
       where: { refresh_token: refreshToken },
     });
     if (!user.length) {
@@ -113,7 +113,7 @@ const logout = async (req, res) => {
   if (!refreshToken) {
     return res.sendStatus(204);
   }
-  const user = await users.findAll({
+  const user = await User.findAll({
     where: { refresh_token: refreshToken },
   });
   if (!user.length) {
@@ -121,7 +121,7 @@ const logout = async (req, res) => {
   }
   // delete refresh token and clear cookie
   const { id: userId } = user[0];
-  await users.update(
+  await User.update(
     { refresh_token: null },
     {
       where: { id: userId },
@@ -139,4 +139,4 @@ const user_controller = {
   logout: logout,
 };
 
-export default user_controller;
+module.exports = user_controller;

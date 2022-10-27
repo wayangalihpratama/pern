@@ -1,6 +1,6 @@
-import express from "express";
-import user_controller from "../controller/user.js";
-import tokenFn from "../middleware/token.js";
+const express = require("express");
+const user_controller = require("../controller/user.js");
+const tokenFn = require("../middleware/token.js");
 
 const user_route = express.Router();
 
@@ -10,4 +10,4 @@ user_route.post("/login", user_controller.login);
 user_route.get("/refresh_token", user_controller.refreshToken);
 user_route.delete("/logout", user_controller.logout);
 
-export default user_route;
+module.exports = user_route;
