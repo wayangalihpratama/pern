@@ -1,5 +1,6 @@
 const express = require("express");
 const user_route = require("./routes/user.js");
+const todo_route = require("./routes/todo.js");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -15,6 +16,7 @@ app.use(express.json()); // to receive data in json format
 
 // route
 app.use(user_route);
+app.use(todo_route);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

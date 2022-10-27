@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       title: { type: DataTypes.TEXT, allowNull: false },
       description: { type: DataTypes.STRING },
       done: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+      userId: { type: DataTypes.INTEGER },
     },
     {
       sequelize,

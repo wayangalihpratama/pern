@@ -30,3 +30,40 @@ GET http://localhost:5000/refresh_token
 
 ###
 DELETE http://localhost:5000/logout
+
+
+###
+GET http://localhost:5000/todos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IkdhbGloIFByYXRhbWEiLCJlbWFpbCI6ImdhbGloQG1haWwuY29tIiwiaWF0IjoxNjY2ODU4NDEyLCJleHAiOjE2NjY4NjIwMTJ9.FhqY1hUyg8vpRbNYJ39kTPzeCrmADXYtKDHzhcPXm8o
+
+
+###
+POST  http://localhost:5000/todo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IkdhbGloIFByYXRhbWEiLCJlbWFpbCI6ImdhbGloQG1haWwuY29tIiwiaWF0IjoxNjY2ODU4NDEyLCJleHAiOjE2NjY4NjIwMTJ9.FhqY1hUyg8vpRbNYJ39kTPzeCrmADXYtKDHzhcPXm8o
+
+
+{
+  "title": "Second Todo",
+  "description": "This is description",
+  "done": false
+}
+
+
+###
+PUT  http://localhost:5000/todo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IkdhbGloIFByYXRhbWEiLCJlbWFpbCI6ImdhbGloQG1haWwuY29tIiwiaWF0IjoxNjY2ODU4NDEyLCJleHAiOjE2NjY4NjIwMTJ9.FhqY1hUyg8vpRbNYJ39kTPzeCrmADXYtKDHzhcPXm8o
+
+
+{
+  "id": 14,
+  "title": "Second Todo update",
+  "description": "This is description update",
+  "done": true
+}
+
+
+###
+DELETE  http://localhost:5000/todo/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IkdhbGloIFByYXRhbWEiLCJlbWFpbCI6ImdhbGloQG1haWwuY29tIiwiaWF0IjoxNjY2ODU4NDEyLCJleHAiOjE2NjY4NjIwMTJ9.FhqY1hUyg8vpRbNYJ39kTPzeCrmADXYtKDHzhcPXm8o

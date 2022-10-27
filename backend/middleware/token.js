@@ -12,6 +12,7 @@ const verifyToken = (req, res, next) => {
       return res.sendStatus(403);
     }
     req.email = decoded.email;
+    req.id = decoded.id;
     next();
   });
 };
