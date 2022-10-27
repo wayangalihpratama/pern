@@ -45,11 +45,11 @@ const Profile = () => {
 
   return (
     <Dropdown overlay={<Menu items={items} />} style={{ marginTop: "-20px" }}>
-      <a href="#" onClick={(e) => e.preventDefault()}>
+      <Link onClick={(e) => e.preventDefault()}>
         <Space style={{ padding: 0 }} align="center">
           <div className="profile">{user.name}</div>
         </Space>
-      </a>
+      </Link>
     </Dropdown>
   );
 };

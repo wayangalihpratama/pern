@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.23.6",
     "axios": "^1.1.3",
+    "concurrently": "^7.5.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "pullstate": "^1.24.0",
@@ -19,10 +20,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"cd $(dirname \"$(pwd)\")/backend && node app.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-dev": "concurrently \"react-scripts start\" \"cd $(dirname \"$(pwd)\")/backend && nodemon app.js\""
   },
   "eslintConfig": {
     "extends": [
