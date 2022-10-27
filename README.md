@@ -6,7 +6,7 @@
 
 ## Start
 
-### Backend
+### Development
 
 - Require nodemon to start express backend
 - Running on port `5000`
@@ -16,4 +16,6 @@
 npm install -g nodemon
 ```
 
-- After installing nodemon globally, go to backend folder then `yarn install` & `./start.sh`
+- After installing nodemon globally, you can run the development apps with below comand:
+  - `yarn start-dev` to run as web application
+  - `yarn start-electron-dev` to run as desktop application
