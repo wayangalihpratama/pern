@@ -1,14 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../components";
 import { api, store } from "../lib";
-import { Table, Tag, Card, Space, Button, Row, Col, Input, Select } from "antd";
+import {
+  Table,
+  Tag,
+  Card,
+  Space,
+  Button,
+  Row,
+  Col,
+  Input,
+  Select,
+  notification,
+} from "antd";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 
 const Todo = () => {
   const todos = store.data.useState((s) => s.todos);
+  const [prevTodos, setPrevTodos] = useState([]);
 
   const updateTodo = (id, obj) => {
+    // set prev todo
+    const prevValue = todos.find((td) => td.id === id);
+    const check = prevTodos.find((td) => td.id === id);
+    if (!check) {
+      setPrevTodos([...prevTodos, prevValue]);
+    }
     store.data.update((s) => {
       s.todos = s.todos.map((td) => {
         if (td.id === id) {
@@ -118,6 +136,26 @@ const Todo = () => {
     updateTodo(record.id, { description: text });
   };
 
+  const handleSave = (record) => {
+    api
+      .put("/todo", record)
+      .then((res) => {
+        notification.success({
+          title: "Updated",
+          message: res.data.msg,
+        });
+        updateTodo(record.id, { onEdit: false });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleCancel = (record) => {
+    const prevValue = prevTodos.find((td) => td.id === record.id);
+    updateTodo(record.id, { ...prevValue, onEdit: false });
+  };
+
   return (
     <Container>
       <Table
@@ -139,10 +177,16 @@ const Todo = () => {
                   </Col>
                   <Col span={24}>
                     <Space size="small">
-                      <Button type="primary" size="small">
+                      <Button
+                        type="primary"
+                        size="small"
+                        onClick={() => handleSave(record)}
+                      >
                         Save
                       </Button>
-                      <Button size="small">Cancel</Button>
+                      <Button size="small" onClick={() => handleCancel(record)}>
+                        Cancel
+                      </Button>
                     </Space>
                   </Col>
                 </Row>
