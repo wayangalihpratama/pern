@@ -7,6 +7,7 @@ const UIStore = new Store({
 
 const DataStore = new Store({
   user: {},
+  todos: [],
 });
 
 const store = {

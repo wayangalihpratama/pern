@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Login, Register } from "./components";
-import { Dashboard } from "./pages";
+import { Dashboard, Todo } from "./pages";
 import { api, store } from "./lib";
 import jwt_decode from "jwt-decode";
 
@@ -40,6 +40,7 @@ function App() {
       <Route exact path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/todo" element={<Todo />} />
     </Routes>
   );
 }
