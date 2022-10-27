@@ -19,12 +19,15 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "main": "public/electron.js",
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"cd $(dirname \"$(pwd)\")/backend && node app.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-dev": "concurrently \"react-scripts start\" \"cd $(dirname \"$(pwd)\")/backend && nodemon app.js\""
+    "start-dev": "concurrently \"react-scripts start\" \"cd $(dirname \"$(pwd)\")/backend && nodemon app.js\"",
+    "start-electron-dev": "concurrently -k \"BROWSER=none yarn start-dev\" \"yarn:electron\"",
+    "electron": "wait-on tcp:3000 && electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +46,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^21.2.0",
+    "electron-is-dev": "^2.0.0",
+    "wait-on": "^6.0.1"
   }
 }
