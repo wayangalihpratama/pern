@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
+const accessTokenExpire = "1hr";
+
 const getUser = async (req, res) => {
   try {
     const data = await User.findAll({
@@ -54,12 +56,12 @@ const login = async (req, res) => {
     }
     const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
     const accessToken = jwt.sign(
-      { userId, userName, userEmail },
+      { id: userId, name: userName, email: userEmail },
       ACCESS_TOKEN_SECRET,
-      { expiresIn: "20s" }
+      { expiresIn: accessTokenExpire }
     );
     const refreshToken = jwt.sign(
-      { userId, userName, userEmail },
+      { id: userId, name: userName, email: userEmail },
       REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
@@ -97,9 +99,9 @@ const refreshToken = async (req, res) => {
       }
       const { id: userId, name, email } = user[0];
       const accessToken = jwt.sign(
-        { userId, name, email },
+        { id: userId, name: name, email: email },
         ACCESS_TOKEN_SECRET,
-        { expiresIn: "20s" }
+        { expiresIn: accessTokenExpire }
       );
       res.json({ accessToken });
     });
