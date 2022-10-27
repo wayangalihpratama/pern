@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.associate = function (models) {
+        User.hasMany(models.Todo, { as: "todo_list" });
+      };
     }
   }
   User.init(
