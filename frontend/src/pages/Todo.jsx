@@ -12,13 +12,16 @@ import {
   Input,
   Select,
   notification,
+  Form,
 } from "antd";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 
 const Todo = () => {
+  const [todoForm] = Form.useForm();
   const todos = store.data.useState((s) => s.todos);
   const [prevTodos, setPrevTodos] = useState([]);
+  const [onAdd, setOnAdd] = useState(false);
 
   const updateTodo = (id, obj) => {
     // set prev todo
@@ -156,48 +159,87 @@ const Todo = () => {
     updateTodo(record.id, { ...prevValue, onEdit: false });
   };
 
+  const handleAdd = () => {
+    setOnAdd(true);
+  };
+
   return (
     <Container>
-      <Table
-        columns={columns}
-        dataSource={todos}
-        expandable={{
-          expandedRowRender: (record) => (
+      <Row gutter={[24, 24]}>
+        <Col span={24}>
+          <Button type="primary" onClick={handleAdd}>
+            Add
+          </Button>
+          {onAdd && (
             <Card>
-              {record.onEdit ? (
-                <Row gutter={[12, 12]}>
-                  <Col span={24}>
-                    <MDEditor
-                      value={record.description}
-                      onChange={(text) => handleChangeDescription(record, text)}
-                      previewOptions={{
-                        rehypePlugins: [[rehypeSanitize]],
-                      }}
-                    />
-                  </Col>
-                  <Col span={24}>
-                    <Space size="small">
-                      <Button
-                        type="primary"
-                        size="small"
-                        onClick={() => handleSave(record)}
-                      >
-                        Save
-                      </Button>
-                      <Button size="small" onClick={() => handleCancel(record)}>
-                        Cancel
-                      </Button>
-                    </Space>
-                  </Col>
-                </Row>
-              ) : (
-                <MDEditor.Markdown source={record.description} />
-              )}
+              <Form
+                form={todoForm}
+                layout="vertical"
+                onFinish={(values) => console.log(values)}
+              >
+                <Form.Item label="Title" name="title" required>
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Description" name="description">
+                  <MDEditor
+                    previewOptions={{
+                      rehypePlugins: [[rehypeSanitize]],
+                    }}
+                  />
+                </Form.Item>
+                <Button onClick={() => todoForm.submit()}>Save</Button>
+              </Form>
             </Card>
-          ),
-          rowExpandable: (record) => record?.description,
-        }}
-      />
+          )}
+        </Col>
+        <Col span={24}>
+          <Table
+            columns={columns}
+            dataSource={todos}
+            expandable={{
+              expandedRowRender: (record) => (
+                <Card>
+                  {record.onEdit ? (
+                    <Row gutter={[12, 12]}>
+                      <Col span={24}>
+                        <MDEditor
+                          value={record.description}
+                          onChange={(text) =>
+                            handleChangeDescription(record, text)
+                          }
+                          previewOptions={{
+                            rehypePlugins: [[rehypeSanitize]],
+                          }}
+                        />
+                      </Col>
+                      <Col span={24}>
+                        <Space size="small">
+                          <Button
+                            type="primary"
+                            size="small"
+                            onClick={() => handleSave(record)}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            size="small"
+                            onClick={() => handleCancel(record)}
+                          >
+                            Cancel
+                          </Button>
+                        </Space>
+                      </Col>
+                    </Row>
+                  ) : (
+                    <MDEditor.Markdown source={record.description} />
+                  )}
+                </Card>
+              ),
+              rowExpandable: (record) => record?.description,
+            }}
+          />
+        </Col>
+      </Row>
     </Container>
   );
 };
