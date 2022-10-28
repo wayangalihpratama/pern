@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Container } from "../components";
 import { api, store } from "../lib";
 import {
@@ -44,6 +44,7 @@ const Todo = () => {
   };
 
   const handleEdit = (record) => {
+    setOnAdd(false);
     updateTodo(record.id, { onEdit: true });
   };
 
@@ -117,7 +118,7 @@ const Todo = () => {
     },
   ];
 
-  useEffect(() => {
+  const loadTodo = useCallback(() => {
     api
       .get("/todos")
       .then((res) => {
@@ -135,22 +136,51 @@ const Todo = () => {
       });
   }, []);
 
+  useEffect(() => {
+    loadTodo();
+  }, [loadTodo]);
+
   const handleChangeDescription = (record, text) => {
     updateTodo(record.id, { description: text });
   };
 
-  const handleSave = (record) => {
+  const handleSave = (record, isNew = false) => {
+    if (isNew) {
+      api
+        .post("/todo", { ...record, done: false })
+        .then((res) => {
+          notification.success({
+            message: "Save Success",
+            description: res.data.msg,
+          });
+          loadTodo();
+          setOnAdd(false);
+          todoForm.resetFields();
+        })
+        .catch((error) => {
+          const { data } = error.response;
+          notification.error({
+            message: "Update Failed",
+            description: data.msg,
+          });
+        });
+      return;
+    }
     api
       .put("/todo", record)
       .then((res) => {
         notification.success({
-          title: "Updated",
-          message: res.data.msg,
+          message: "Update Success",
+          description: res.data.msg,
         });
         updateTodo(record.id, { onEdit: false });
       })
       .catch((error) => {
-        console.error(error);
+        const { data } = error.response;
+        notification.error({
+          message: "Update Failed",
+          description: data.msg,
+        });
       });
   };
 
@@ -175,7 +205,7 @@ const Todo = () => {
               <Form
                 form={todoForm}
                 layout="vertical"
-                onFinish={(values) => console.log(values)}
+                onFinish={(values) => handleSave(values, true)}
               >
                 <Form.Item label="Title" name="title" required>
                   <Input />
@@ -187,7 +217,23 @@ const Todo = () => {
                     }}
                   />
                 </Form.Item>
-                <Button onClick={() => todoForm.submit()}>Save</Button>
+                <Space>
+                  <Button
+                    onClick={() => todoForm.submit()}
+                    type="primary"
+                    ghost
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setOnAdd(false);
+                      todoForm.resetFields();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Space>
               </Form>
             </Card>
           )}
