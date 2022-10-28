@@ -1,6 +1,7 @@
-# PERN (Postgress - Express - React - Node)
+# Simple TODO application
 
-- Try to learning use Express JS as backend with Postgress as database and React as frontend. Will try to implement electron js to launch this project as desktop application.
+- This TODO app created using PERN (Postgress - Express - React - Node).
+- This application can be running as web and desktop application.
 
 ---
 
