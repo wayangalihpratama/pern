@@ -1,6 +1,6 @@
 const path = require("path");
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, nativeTheme } = require("electron");
 const isDev = require("electron-is-dev");
 
 function createWindow() {
@@ -20,6 +20,8 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+  nativeTheme.themeSource = "light";
+
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools({ mode: "detach" });
