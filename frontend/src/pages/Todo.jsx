@@ -132,7 +132,7 @@ const Todo = () => {
           <Button
             size="small"
             onClick={() => handleEdit(record)}
-            disabled={record.onEdit}
+            disabled={record.onEdit || record.done}
           >
             Edit
           </Button>

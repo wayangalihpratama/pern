@@ -1,6 +1,7 @@
 "use strict";
 
 const { User } = require("../models");
+const { faker } = require("@faker-js/faker");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -15,16 +16,17 @@ module.exports = {
      * }], {});
      */
     const user = await User.findAll();
-    await queryInterface.bulkInsert("Todos", [
-      {
-        title: "First Todo",
-        description: "## This is todo description in markdown.",
-        done: false,
+    const todos = [...Array(25)].map((_, i) => {
+      return {
+        title: `Task ${i + 1}`,
+        description: faker.lorem.paragraphs(2),
+        done: i < 5 ? true : false,
         userId: user[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
-      },
-    ]);
+      };
+    });
+    await queryInterface.bulkInsert("Todos", todos);
   },
 
   async down(queryInterface, Sequelize) {
