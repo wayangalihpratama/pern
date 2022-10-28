@@ -13,6 +13,7 @@ import {
   Select,
   notification,
   Form,
+  Popconfirm,
 } from "antd";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
@@ -54,6 +55,24 @@ const Todo = () => {
 
   const handleChangeStatus = (record, value) => {
     updateTodo(record.id, { done: value });
+  };
+
+  const handleDelete = (record) => {
+    api
+      .delete(`/todo/${record.id}`)
+      .then(() => {
+        notification.success({
+          message: "Delete Success",
+          description: `Task ${record.title} deleted.`,
+        });
+        loadTodo();
+      })
+      .catch(() => {
+        notification.error({
+          message: "Delete Failed",
+          description: `Can't delete task ${record.title}. Please try again later.`,
+        });
+      });
   };
 
   const columns = [
@@ -116,9 +135,17 @@ const Todo = () => {
           >
             Edit
           </Button>
-          <Button size="small" danger disabled={record.onEdit}>
-            Delete
-          </Button>
+          <Popconfirm
+            disabled={record.onEdit}
+            title="Are you sure to delete this task?"
+            onConfirm={() => handleDelete(record)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button size="small" danger disabled={record.onEdit}>
+              Delete
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },
