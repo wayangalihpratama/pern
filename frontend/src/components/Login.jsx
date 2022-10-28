@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Card, Form, Input, Button } from "antd";
+import { Row, Card, Form, Input, Button, notification } from "antd";
 import { api, store } from "../lib";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,11 @@ const Login = () => {
         navigate("/dashboard");
       })
       .catch((err) => {
-        console.error(err);
+        const { data } = err.response;
+        notification.error({
+          message: "Login Failed",
+          description: data.msg,
+        });
       });
   };
 

@@ -17,5 +17,5 @@ npm install -g nodemon
 ```
 
 - After installing nodemon globally, you can run the development apps with below comand:
-  - `yarn start-dev` to run as web application
-  - `yarn start-electron-dev` to run as desktop application
+  - `./start-web.sh` to run as web application
+  - `./start-electron.sh` or to run as desktop application

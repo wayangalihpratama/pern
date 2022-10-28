@@ -41,8 +41,8 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
     const login = await User.findAll({ where: { email: email } });
     const {
       id: userId,
@@ -52,7 +52,7 @@ const login = async (req, res) => {
     } = login[0];
     const match = await bcrypt.compare(password, userPassword);
     if (!match) {
-      return req.status(400).json({ msg: "Wrong password!" });
+      return res.status(400).json({ msg: "Please check your password." });
     }
     const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
     const accessToken = jwt.sign(
@@ -76,7 +76,9 @@ const login = async (req, res) => {
     });
     res.json({ id: userId, name: userName, email: userEmail, accessToken });
   } catch (error) {
-    res.status(404).json({ msg: "User not found!" });
+    res.status(404).json({
+      msg: `Account ${email} not found. Please register to use this application.`,
+    });
   }
 };
 
