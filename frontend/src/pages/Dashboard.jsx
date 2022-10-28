@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Container } from "../components";
 import { store } from "../lib";
+import { Typography } from "antd";
 
 const Dashboard = () => {
   const loading = store.ui.useState((s) => s.loading);
@@ -18,7 +19,7 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <h1>Welcome {user?.name}</h1>
+      <Typography.Title>Welcome {user?.name}</Typography.Title>
     </Container>
   );
 };

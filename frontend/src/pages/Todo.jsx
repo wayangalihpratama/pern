@@ -14,6 +14,7 @@ import {
   notification,
   Form,
   Popconfirm,
+  Typography,
 } from "antd";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
@@ -223,12 +224,15 @@ const Todo = () => {
   };
 
   const handleAdd = () => {
-    setOnAdd(true);
+    setOnAdd(!onAdd);
   };
 
   return (
     <Container>
       <Row gutter={[24, 24]}>
+        <Col span={24}>
+          <Typography.Title>Todo List</Typography.Title>
+        </Col>
         <Col span={24}>
           <Button type="primary" onClick={handleAdd}>
             Add
