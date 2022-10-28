@@ -64,12 +64,13 @@ const Todo = () => {
       render: (_, record) =>
         record.onEdit ? (
           <Input
+            key={`title-input-${record.id}`}
             value={record.title}
             size="small"
             onChange={(e) => handleChangeTitle(record, e.target.value)}
           />
         ) : (
-          record.title
+          <div key={`title-${record.id}`}>{record.title}</div>
         ),
     },
     {
@@ -80,6 +81,7 @@ const Todo = () => {
         if (record.onEdit) {
           return (
             <Select
+              key={`status-select-${record.id}`}
               size="small"
               value={record.done}
               options={[
@@ -91,10 +93,14 @@ const Todo = () => {
             />
           );
         }
-        return record.done ? (
-          <Tag color="green">Done</Tag>
-        ) : (
-          <Tag color="orange">Ongoing</Tag>
+        return (
+          <div key={`status-${record.id}`}>
+            {record.done ? (
+              <Tag color="green">Done</Tag>
+            ) : (
+              <Tag color="orange">Ongoing</Tag>
+            )}
+          </div>
         );
       },
     },
@@ -102,7 +108,7 @@ const Todo = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <Space size="middle">
+        <Space size="middle" key={`action-${record.id}`}>
           <Button
             size="small"
             onClick={() => handleEdit(record)}
@@ -240,11 +246,12 @@ const Todo = () => {
         </Col>
         <Col span={24}>
           <Table
+            rowKey={(rec) => `row-${rec.id}`}
             columns={columns}
             dataSource={todos}
             expandable={{
               expandedRowRender: (record) => (
-                <Card>
+                <Card key={`todo-description-${record.id}`}>
                   {record.onEdit ? (
                     <Row gutter={[12, 12]}>
                       <Col span={24}>
