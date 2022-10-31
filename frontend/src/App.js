@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { Login, Register } from "./components";
 import { Dashboard, Todo } from "./pages";
 import { api, store } from "./lib";
@@ -9,9 +9,10 @@ import jwt_decode from "jwt-decode";
 function App() {
   const loading = store.ui.useState((s) => s.loading);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (loading) {
+    if (loading && location.pathname !== "/register") {
       api
         .get("/refresh_token")
         .then((res) => {
@@ -33,7 +34,7 @@ function App() {
           });
         });
     }
-  }, [navigate, loading]);
+  }, [location.pathname, navigate, loading]);
 
   return (
     <Routes>
