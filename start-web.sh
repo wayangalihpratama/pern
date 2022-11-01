@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cd frontend && yarn start-dev
+yarn start-dev

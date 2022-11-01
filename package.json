@@ -1,0 +1,22 @@
+{
+  "name": "pern",
+  "version": "1.0.0",
+  "description": "Simple TODO apps",
+  "repository": "git@github.com:wayangalihpratama/pern.git",
+  "author": "wayangalihpratama <wgprtm@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "main": "src/electron.js",
+  "scripts": {
+    "start": "concurrently \"cd $(dirname \"$(pwd)\")/pern/src/frontend && yarn start\" \"cd $(dirname \"$(pwd)\")/pern/src/backend && node app.js\"",
+    "start-dev": "concurrently \"cd $(dirname \"$(pwd)\")/pern/src/frontend && yarn start\" \"cd $(dirname \"$(pwd)\")/pern/src/backend && nodemon app.js\"",
+    "start-electron-dev": "concurrently -k \"BROWSER=none yarn start-dev\" \"yarn:electron\"",
+    "electron": "wait-on tcp:3000 && electron ."
+  },
+  "devDependencies": {
+    "concurrently": "^7.5.0",
+    "electron": "^21.2.1",
+    "electron-is-dev": "^2.0.0",
+    "wait-on": "^6.0.1"
+  }
+}
